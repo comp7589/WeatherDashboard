@@ -74,12 +74,12 @@ $(document).ready(function () {
                 // } else {
                 //     uvColor = "violet";
                 // }
-                
+                cardBody.append(uvIndex);
             });
 
             // merge and add to page
             title.append(img);
-            cardBody.append(title, temp, humid, wind, uvIndex);
+            cardBody.append(title, temp, humid, wind);
             card.append(cardBody);
             $("#today").append(card);
             console.log(data);
