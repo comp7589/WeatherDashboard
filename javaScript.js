@@ -48,6 +48,7 @@ $(document).ready(function () {
             var wind = $("<p>").addClass("card-text").text("Wind Speed: " + data.wind.speed + " MPH");
             var humid = $("<p>").addClass("card-text").text("Humidity: " + data.main.humidity + "%");
             var temp = $("<p>").addClass("card-text").text("Temperature: " + data.main.temp + " °F");
+            var uvIndex;
 
             var lon = data.coord.lon;
             var lat = data.coord.lat;
@@ -58,8 +59,7 @@ $(document).ready(function () {
 
             }).then(function (response) {
                 console.log(response);
-                var uvIndex = $("<p>").addClass("card-text").text("UV Index: " + response.value);
-                console.log(uvIndex);
+                uvIndex = $("<p>").addClass("card-text").text("UV Index: " + response.value);
                 console.log(response.value);
                 // var uvColor = "";
 
