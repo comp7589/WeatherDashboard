@@ -2,7 +2,7 @@ $(document).ready(function () {
     //search button feature
     $("#search-button").on("click", function () {
         var searchTerm = $("#search-value").val();//grab value in input search-value.
-        $("#search-value").val("");
+        $("#search-value").val("");//empty input field.
         weatherFunction(searchTerm);//call weatherFunction with searchTerm parameter.
 
     });
@@ -37,7 +37,7 @@ $(document).ready(function () {
                 localStorage.setItem("history", JSON.stringify(history));//places item pushed into local storage with
                 createRow(searchTerm);
             }
-            $("#today").empty();// clears out old content/prevents infinite loop.
+            // $("#today").empty();// clears out old content/prevents infinite loop.
 
             var title = $("<h3>").addClass("card-title").text(data.name + " (" + new Date().toLocaleDateString() + ")");
             var img = $("<img>").attr("src", "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png");
@@ -45,17 +45,45 @@ $(document).ready(function () {
 
             var card = $("<div>").addClass("card");
             var cardBody = $("<div>").addClass("card-body");
-            var wind = $("<p>").addClass("card-text").text("Wind Speed: " +  data.wind.speed + " MPH");
+            var wind = $("<p>").addClass("card-text").text("Wind Speed: " + data.wind.speed + " MPH");
             var humid = $("<p>").addClass("card-text").text("Humidity: " + data.main.humidity + "%");
             var temp = $("<p>").addClass("card-text").text("Temperature: " + data.main.temp + " °F");
 
+            var lon = data.coord.lon;
+            var lat = data.coord.lat;
+
+            $.ajax({
+                url: "http://api.openweathermap.org/data/2.5/uvi?appid=9bbe868aa95e2e05ff8a18fa3fab1fc7&lat=" + lat + "&lon=" + lon,
+                method: "GET",
+
+            }).then(function (response) {
+                console.log(response);
+                var uvIndex = $("<p>").addClass("card-text").text("UV Index: " + response.value);
+                console.log(uvIndex);
+                console.log(response.value);
+                // var uvColor = "";
+
+                // if (uvIndex < 3) {
+                //     uvColor = "green";
+                // } else if (uvIndex < 6) {
+                //     uvColor = "yellow";
+                // } else if (uvIndex < 8) {
+                //     uvColor = "orange;"
+                // } else if (uvIndex < 11) {
+                //     uvColor = "red";
+                // } else {
+                //     uvColor = "violet";
+                // }
+                
+            });
+
             // merge and add to page
             title.append(img);
-            cardBody.append(title, temp, humid, wind);
+            cardBody.append(title, temp, humid, wind, uvIndex);
             card.append(cardBody);
             $("#today").append(card);
             console.log(data);
-            //weatherFunction(searchTerm);
+            //weatherFunction(searchTerm); CAUSE OF INFINTE LOOP TO REFRESH CARD***
         });
     }
     // function weather5Day(searchTerm) 1) drop similar AJAX as above. 2) append to #forecast 3) in #forecast add row in class & add plain text "5 day forecast: " etc.
