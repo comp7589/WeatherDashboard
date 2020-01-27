@@ -41,7 +41,7 @@ $(document).ready(function () {
             $("#today").empty();// clears out old content
 
             var title = $("<h3>").addClass("card-title").text(data.name + " (" + new Date().toLocaleDateString() + ")");
-            var img = $("<img>").attr("src", "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png");
+            var img = $("<img>").attr("src", "https://openweathermap.org/img/w/" + data.weather[0].icon + ".png");
 
 
             var card = $("<div>").addClass("card");
@@ -101,7 +101,7 @@ $(document).ready(function () {
         }).then(function (number) {
             console.log(number);
             var titleFive = $("<h3>").addClass("card-title").text(new Date().toLocaleDateString());
-            var imgFive = $("<img>").attr("src", "http://openweathermap.org/img/w/" + number.list.weather[0].icon + ".png");
+            var imgFive = $("<img>").attr("src", "https://openweathermap.org/img/w/" + number.list.weather[0].icon + ".png");
 
             var cardFive = $("<div>").addClass("card");
             var cardBodyFive = $("<div>").addClass("card-body");
