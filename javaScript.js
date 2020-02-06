@@ -3,8 +3,8 @@ $(document).ready(function () {
     $("#search-button").on("click", function () {
         var searchTerm = $("#search-value").val();//grab value in input search-value.
         $("#search-value").val("");//empty input field.
-        weatherFunction(searchTerm);//call weatherFunction with searchTerm parameter.
-        weatherForecast(searchTerm);// NOT functioning properly***.
+        weatherFunction(searchTerm);
+        weatherForecast(searchTerm);
     });
 
     var history = JSON.parse(localStorage.getItem("history")) || [];//grab item from local storage, if any.
@@ -49,7 +49,6 @@ $(document).ready(function () {
             var wind = $("<p>").addClass("card-text").text("Wind Speed: " + data.wind.speed + " MPH");
             var humid = $("<p>").addClass("card-text").text("Humidity: " + data.main.humidity + "%");
             var temp = $("<p>").addClass("card-text").text("Temperature: " + data.main.temp + " °F");
-            //uvColor not appending to page**
 
             var lon = data.coord.lon;
             var lat = data.coord.lat;
@@ -100,7 +99,7 @@ $(document).ready(function () {
 
         }).then(function (data) {
             console.log(data);
-            $("#forecast").html("<h4 class=\"mt-3\">5-Day Forecast:</h4>").append("<div class=\"row deck\">");
+            $("#forecast").html("<h4 class=\"mt-3\">5-Day Forecast:</h4>").append("<div class=\"row deck\">");//do I need the .append or not? Only styled it out of the way.
 
             for (var i = 0; i < data.list.length; i++) {
 

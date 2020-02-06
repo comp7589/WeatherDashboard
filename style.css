@@ -7,6 +7,10 @@
 }
 .deck{
     position: absolute;
-    left: -25%;
+    left: -5%;
     top: 50%;
+}
+h1 {
+    margin-bottom: 0%;
+    background-image: linear-gradient(to right, rgb(78, 186, 236) , rgb(190, 109, 245));
 }
