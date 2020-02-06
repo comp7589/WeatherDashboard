@@ -30,9 +30,10 @@ $(document).ready(function () {
         var listItem = $("<li>").addClass("list-group-item").text(text);
         $(".history").append(listItem);
     }
-    //
+    //listener for list item on click functionality.
     $(".history").on("click", "li", function () {
         weatherFunction($(this).text());
+        weatherForecast($(this).text());
     });
 
     function weatherFunction(searchTerm) {
@@ -108,7 +109,7 @@ $(document).ready(function () {
 
         }).then(function (data) {
             console.log(data);
-            $("#forecast").html("<h4 class=\"mt-3\">5-Day Forecast:</h4>").append("<div class=\"row\">");//do I need the .append or not? Only styled it out of the way.
+            $("#forecast").html("<h4 class=\"mt-3\">5-Day Forecast:</h4>").append("<div class=\"row\">");
 
             for (var i = 0; i < data.list.length; i++) {
 
