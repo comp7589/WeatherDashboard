@@ -7,6 +7,16 @@ $(document).ready(function () {
         weatherForecast(searchTerm);
     });
 
+    //search button enter key feature. NOT WORKING***
+    $("#search-button").keypress(function (event) {
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        // var searchTerm = $("#search-value").val();
+        if (keycode === 13) {
+            weatherFunction(searchTerm);
+            weatherForecast(searchTerm);
+        }
+    });
+
     var history = JSON.parse(localStorage.getItem("history")) || [];//grab item from local storage, if any.
 
     if (history.length > 0) {//sets history array search to correct length.
@@ -77,7 +87,6 @@ $(document).ready(function () {
 
                 cardBody.append(uvIndex);
                 $("#today .card-body").append(uvIndex.append(btn));
-                $(uvIndex).css({ "background-color": uvColor });
 
             });
 
@@ -99,7 +108,7 @@ $(document).ready(function () {
 
         }).then(function (data) {
             console.log(data);
-            $("#forecast").html("<h4 class=\"mt-3\">5-Day Forecast:</h4>").append("<div class=\"row deck\">");//do I need the .append or not? Only styled it out of the way.
+            $("#forecast").html("<h4 class=\"mt-3\">5-Day Forecast:</h4>").append("<div class=\"row\">");//do I need the .append or not? Only styled it out of the way.
 
             for (var i = 0; i < data.list.length; i++) {
 
@@ -108,17 +117,22 @@ $(document).ready(function () {
                     var titleFive = $("<h3>").addClass("card-title").text(new Date(data.list[i].dt_txt).toLocaleDateString());
                     var imgFive = $("<img>").attr("src", "https://openweathermap.org/img/w/" + data.list[i].weather[0].icon + ".png");
 
-                    // var colFive = $("<div>").addClass("col-md-2");//newly added to test.
+                    var colFive = $("<div>").addClass("col-md-2");//newly added to test issue.
                     var cardFive = $("<div>").addClass("card bg-primary text-white");
                     var cardBodyFive = $("<div>").addClass("card-body p-2");
                     var humidFive = $("<p>").addClass("card-text").text("Humidity: " + data.list[i].main.humidity + "%");
                     var tempFive = $("<p>").addClass("card-text").text("Temperature: " + data.list[i].main.temp + " °F");
 
-                    //merge to div
-                    titleFive.append(imgFive);
-                    cardBodyFive.append(titleFive, tempFive, humidFive);
-                    cardFive.append(cardBodyFive);
-                    $(".card-deck").append(cardFive);
+                    //merge together and put on page
+                    colFive.append(cardFive.append(cardBodyFive.append(titleFive, imgFive, tempFive, humidFive)));
+                    //append card to column, body to card, and other elements to body
+                    $("#forecast .row").append(colFive);
+
+                    // //OLD WAY: merge to div ---remove colFive to make right.
+                    // titleFive.append(imgFive);
+                    // cardBodyFive.append(titleFive, tempFive, humidFive);
+                    // cardFive.append(cardBodyFive);
+                    // $(".card-deck").append(cardFive);
                 }
             }
         });
